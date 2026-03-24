@@ -1,6 +1,18 @@
+{% load static %}
 <html>
 <head>
     <title>AutoMax</title>  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Bernardo de la Sierra Based on Django">
+
+    {% block 'title' %}
+    <title>AutoMax . List Your Car Today!</title>
+    {% endblock %}
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
     <h1>Welcome to AutoMax!</h1>
