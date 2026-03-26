@@ -1,7 +1,9 @@
 from django.db import models
 import uuid
 
+from main.consts import CARS_BRANDS, TRANSMISSION_OPTIONS
 from users.models import Profile, Location
+from .utils import user_listing_path
 # Create your models here.
 
 
@@ -11,18 +13,18 @@ class Listing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     seller = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    # brand = models.CharField(max_length=24, choices=CARS_BRANDS, default=None)
-    # model = models.CharField(max_length=64,)
-    # vin = models.CharField(max_length=17,)
-    # mileage = models.IntegerField(default=0)
-    # color = models.CharField(max_length=24,)
-    # description = models.TextField()
-    # engine = models.CharField(max_length=24,)
-    # transmisson = models.CharField(
-    #     max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
-    # location = models.OneToOneField(
-    #     Location, on_delete=models.SET_NULL, null=True)
-    # image = models.ImageField(upload_to=user_listing_path)
+    brand = models.CharField(max_length=24, choices=CARS_BRANDS, default=None)
+    model = models.CharField(max_length=64,)
+    vin = models.CharField(max_length=17,)
+    mileage = models.IntegerField(default=0)
+    color = models.CharField(max_length=24,)
+    description = models.TextField()
+    engine = models.CharField(max_length=24,)
+    transmisson = models.CharField(
+        max_length=24, choices=TRANSMISSION_OPTIONS, default=None)
+    location = models.OneToOneField(
+        Location, on_delete=models.SET_NULL, null=True)
+    image = models.ImageField(upload_to=user_listing_path)
 
-    # def __str__(self):
-    #     return f'{self.seller.user.username}\'s Listing - {self.model}'
+    def __str__(self):
+        return f'{self.seller.user.username}\'s Listing - {self.model}'
