@@ -3,7 +3,6 @@ from .models import Listing
 # Register your models here.
 
 
-
 class ListingAdmin(admin.ModelAdmin):
     readonly_fields = ('id', )
 
