@@ -1,9 +1,15 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+
+from django.http import JsonResponse
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Listing
-from .forms import ListingForm, LocationForm
 from django.contrib import messages
+from django.core.mail import send_mail
+
+from .models import LikedListing, Listing
+from .forms import ListingForm
+from users.forms import LocationForm
+from .filters import ListingFilter
+
 # Create your views here.
 
 
@@ -16,11 +22,15 @@ def landing_page(request):
 @login_required
 def home_view(request):
     listings = Listing.objects.all()
+    listing_filter = ListingFilter(request.GET, queryset=listings)
+    user_liked_listings = LikedListing.objects.filter(
+        profile=request.user.profile).values_list('listing')
+    liked_listings_ids = [l[0] for l in user_liked_listings]
     context = {
-        'listings': listings,
+        'listing_filter': listing_filter,
+        'liked_listings_ids': liked_listings_ids,
     }
     return render(request, "views/home.html", context)
-
 
 @login_required
 def list_view(request):
