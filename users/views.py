@@ -28,6 +28,12 @@ def login_view(request):
         login_form = AuthenticationForm()
     return render(request, 'views/login.html', {'login_form': login_form})
 
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('main')
+
 class RegisterView(View):
 
     def get(self, request):
@@ -46,3 +52,4 @@ class RegisterView(View):
         else:
             messages.error(request, f'An error occured trying to register.')
             return render(request, 'views/register.html', {'register_form': register_form})
+
